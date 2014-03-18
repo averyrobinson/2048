@@ -49,13 +49,22 @@ HTMLActuator.prototype.clearContainer = function (container) {
 HTMLActuator.prototype.addTile = function (tile) {
   var self = this;
 
+  var primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29];
+  var prime = 2
+  var i;
+  for (i = 1; i < primes.length; ++i) {
+      if (tile.value % primes[i] == 0) {
+          prime = primes[i];
+      }
+  }
+
   var wrapper   = document.createElement("div");
   var inner     = document.createElement("div");
   var position  = tile.previousPosition || { x: tile.x, y: tile.y };
   var positionClass = this.positionClass(position);
 
   // We can't use classlist because it somehow glitches when replacing classes
-  var classes = ["tile", "tile-" + tile.value, positionClass];
+  var classes = ["tile", "tile-" + prime, positionClass];
 
   if (tile.value > 2048) classes.push("tile-super");
 
